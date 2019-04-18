@@ -52,7 +52,7 @@ class ListingsController < ApplicationController
     end
 
     def listing_params
-        params.require(:listing).permit(:title, :description, :breed_id, :sex, :price, :deposit, :date_of_birth, :diet)
+        params.require(:listing).permit(:title, :description, :breed_id, :sex, :price, :deposit, :date_of_birth, :diet, :picture)
         # whitelist of what we will accept
     end
 
