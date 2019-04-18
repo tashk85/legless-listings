@@ -1,5 +1,6 @@
 class ListingsController < ApplicationController
     before_action :set_listing, only: [:show, :edit, :update, :destroy]
+    before_action :set_breeds_and_sexes, only: [:new, :edit]
     
     def index
         # shows all listings
@@ -9,14 +10,19 @@ class ListingsController < ApplicationController
     def create
         # create new listing
         @listing = Listing.create(listing_params)
-        byebug
+        
+        if @listing.errors.any?
+            set_breeds_and_sexes
+            render "new"
+        else
+            redirect_to listings_path
+        end
     end
 
     def new
         # shows form for creating a new listing
         @listing = Listing.new
-        @breeds = Breed.all
-        @sexes = Listing.sexes.keys
+        
     end
 
     def show
@@ -40,6 +46,7 @@ class ListingsController < ApplicationController
     end
 
     private
+    # internal use only
     def set_listing
         id = params[:id]
         @listing = Listing.find(id)
@@ -48,6 +55,11 @@ class ListingsController < ApplicationController
     def listing_params
         params.require(:listing).permit(:title, :description, :breed_id, :sex, :price, :deposit, :date_of_birth, :diet)
         # whitelist of what we will accept
+    end
+
+    def set_breeds_and_sexes
+        @breeds = Breed.all
+        @sexes = Listing.sexes.keys
     end
 
 end
