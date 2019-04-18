@@ -1,4 +1,5 @@
 <h1>Snake Listings</h1>
+<%= link_to "Add New Listing", new_listing_path %>
 
 <% @listings.each do |listing| %>
     <div class="card">
@@ -9,3 +10,4 @@
         <%= link_to "edit", edit_listing_path(listing.id) %>
     </div>
 <% end %>
+
